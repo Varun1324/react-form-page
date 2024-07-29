@@ -1,14 +1,19 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
+import { storage } from '../../firebase';
+
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import "./UserForm.css";
-import userimage from "../assets/user-image.png";
+import userimage from "../../assets/user-image.png";
 
 const UserForm = () => {
   const [isYesChecked, setIsYesChecked] = useState(false);
   const [isNoChecked, setIsNoChecked] = useState(false);
   const [isSubFormYesChecked, setIsSubFormYesChecked] = useState(false);
   const [isSubFormNoChecked, setIsSubFormNoChecked] = useState(false);
-  const [attendees, setAttendees] = useState([{ name: "", relation: "", file: null }]);
+  const [attendees, setAttendees] = useState([
+    { name: "", relation: "", file: null },
+  ]);
 
   const handleYesChange = (event) => {
     setIsYesChecked(event.target.checked);
@@ -61,6 +66,32 @@ const UserForm = () => {
     setAttendees(newAttendees);
   };
 
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const file = attendees[0].file;
+    const storageRef = ref(storage, `student/${file.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, file);
+
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        const progress =
+          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+        console.log("Upload is " + progress + "% done");
+      },
+      (error) => {
+        console.log("Error uploading file", error);
+      },
+
+      () => {
+        console.log("File is being uploaded");
+        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+          console.log("File available at", url);
+        });
+      }
+    );
+  };
+
   return (
     <div className="full-container">
       <div className="semi-full-container">
@@ -109,7 +140,7 @@ const UserForm = () => {
                   <p>Hall Ticket Number</p>
                 </div>
                 <div className="descp">
-                  <label>Persons additionally attending with you?{" "}</label>
+                  <label>Persons additionally attending with you? </label>
                 </div>
                 <div className="checkboxes">
                   <label>
@@ -135,7 +166,7 @@ const UserForm = () => {
             )}
 
             {isSubFormYesChecked && (
-              <form action="">
+              <form onSubmit={handleSubmit}>
                 <div className="subform">
                   {attendees.map((attendee, index) => (
                     <div className="sub-container" key={index}>
@@ -159,11 +190,15 @@ const UserForm = () => {
                         placeholder="Relation"
                         value={attendee.relation}
                         onChange={(e) =>
-                          handleAttendeeChange(index, "relation", e.target.value)
+                          handleAttendeeChange(
+                            index,
+                            "relation",
+                            e.target.value
+                          )
                         }
                       />
                       <input
-                      placeholder="Upload Image"
+                        placeholder="Upload Image"
                         type="file"
                         onChange={(e) =>
                           handleFileChange(index, e.target.files[0])
