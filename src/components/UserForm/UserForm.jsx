@@ -1,129 +1,181 @@
 // eslint-disable-next-line no-unused-vars
 import React, { useState } from "react";
-import { storage } from '../../firebase';
+import { RxCross2 } from "react-icons/rx";
+import Confetti from "react-confetti";
+import { useNavigate } from 'react-router-dom';
+import logo from "../../assets/college_logo.png";
 
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { Button, Modal, Box, Typography } from "@mui/material";
+// import { storage } from '../../firebase';
+
+// import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import "./UserForm.css";
 import userimage from "../../assets/user-image.png";
 
 const UserForm = () => {
-  const [isYesChecked, setIsYesChecked] = useState(false);
-  const [isNoChecked, setIsNoChecked] = useState(false);
-  const [isSubFormYesChecked, setIsSubFormYesChecked] = useState(false);
-  const [isSubFormNoChecked, setIsSubFormNoChecked] = useState(false);
-  const [attendees, setAttendees] = useState([
-    { name: "", relation: "", file: null },
-  ]);
+  const navigate = useNavigate();
+  const [modalOpen, setModalOpen] = useState(false);
+  // const [isNoChecked, setIsNoChecked] = useState(false);
+  // const [isSubFormYesChecked, setIsSubFormYesChecked] = useState(false);
+  // const [isSubFormNoChecked, setIsSubFormNoChecked] = useState(false);
+  // const [attendees, setAttendees] = useState([
+  //   { name: "", relation: "", file: null },
+  // ]);
 
-  const handleYesChange = (event) => {
-    setIsYesChecked(event.target.checked);
-    if (event.target.checked) {
-      setIsNoChecked(false);
-    }
+  const handleYesChange = () => {
+
+    navigate("/guestForm");
+    // setIsYesChecked(event.target.checked);
+    // if (event.target.checked) {
+    //   setIsNoChecked(false);
+    // }
   };
 
-  const handleNoChange = (event) => {
-    setIsNoChecked(event.target.checked);
-    if (event.target.checked) {
-      setIsYesChecked(false);
-      setIsSubFormYesChecked(false);
-    }
+  const handleNoChange = () => {
+    setModalOpen(true);
   };
-
-  const handleSubFormYesChange = (event) => {
-    setIsSubFormYesChecked(event.target.checked);
-    if (event.target.checked) {
-      setIsSubFormNoChecked(false);
-    }
+  const handleModalClose = () => {
+    setModalOpen(false);
   };
+  // const handleSubFormYesChange = (event) => {
+  //   setIsSubFormYesChecked(event.target.checked);
+  //   if (event.target.checked) {
+  //     setIsSubFormNoChecked(false);
+  //   }
+  // };
 
-  const handleSubFormNoChange = (event) => {
-    setIsSubFormNoChecked(event.target.checked);
-    if (event.target.checked) {
-      setIsSubFormYesChecked(false);
-    }
-  };
+  // const handleSubFormNoChange = (event) => {
+  //   setIsSubFormNoChecked(event.target.checked);
+  //   if (event.target.checked) {
+  //     setIsSubFormYesChecked(false);
+  //   }
+  // };
 
-  const handleAddAttendee = () => {
-    setAttendees([...attendees, { name: "", relation: "", file: null }]);
-  };
+  // const handleAddAttendee = () => {
+  //   setAttendees([...attendees, { name: "", relation: "", file: null }]);
+  // };
 
-  const handleRemoveAttendee = (index) => {
-    setAttendees(attendees.filter((_, i) => i !== index));
-  };
+  // const handleRemoveAttendee = (index) => {
+  //   setAttendees(attendees.filter((_, i) => i !== index));
+  // };
 
-  const handleAttendeeChange = (index, field, value) => {
-    const newAttendees = attendees.map((attendee, i) =>
-      i === index ? { ...attendee, [field]: value } : attendee
-    );
-    setAttendees(newAttendees);
-  };
+  // const handleAttendeeChange = (index, field, value) => {
+  //   const newAttendees = attendees.map((attendee, i) =>
+  //     i === index ? { ...attendee, [field]: value } : attendee
+  //   );
+  //   setAttendees(newAttendees);
+  // };
 
-  const handleFileChange = (index, file) => {
-    const newAttendees = attendees.map((attendee, i) =>
-      i === index ? { ...attendee, file } : attendee
-    );
-    setAttendees(newAttendees);
-  };
+  // const handleFileChange = (index, file) => {
+  //   const newAttendees = attendees.map((attendee, i) =>
+  //     i === index ? { ...attendee, file } : attendee
+  //   );
+  //   setAttendees(newAttendees);
+  // };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const file = attendees[0].file;
-    const storageRef = ref(storage, `student/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
+  // const handleSubmit = (event) => {
+  //   event.preventDefault();
+  //   const file = attendees[0].file;
+  //   const storageRef = ref(storage, `student/${file.name}`);
+  //   const uploadTask = uploadBytesResumable(storageRef, file);
 
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        const progress =
-          (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log("Upload is " + progress + "% done");
-      },
-      (error) => {
-        console.log("Error uploading file", error);
-      },
+  //   uploadTask.on(
+  //     "state_changed",
+  //     (snapshot) => {
+  //       const progress =
+  //         (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+  //       console.log("Upload is " + progress + "% done");
+  //     },
+  //     (error) => {
+  //       console.log("Error uploading file", error);
+  //     },
 
-      () => {
-        console.log("File is being uploaded");
-        getDownloadURL(uploadTask.snapshot.ref).then((url) => {
-          console.log("File available at", url);
-        });
-      }
-    );
-  };
-
+  //     () => {
+  //       console.log("File is being uploaded");
+  //       getDownloadURL(uploadTask.snapshot.ref).then((url) => {
+  //         console.log("File available at", url);
+  //       });
+  //     }
+  //   );
+  // };
   return (
     <div className="full-container">
+            <div className="college-logo-div">
+      <img src={logo} alt="logo" className="college-logo" />
+      </div>
       <div className="semi-full-container">
-        <div className="title">
-          <h4>Student Registration Form</h4>
-        </div>
         <div className="main-container">
           <div className="container">
-            <div className="descp">
-              <p>Are you willing to attend?</p>
+            <div>
+              <div className="column-container">
+                <img
+                  src={userimage}
+                  alt="User"
+                  style={{ width: "75px", height: "75px" }}
+                />
+              </div>
+              <div className="column-container">
+                <h2>Name</h2>
+              </div>
+              <div className="column-container">
+                <p style={{ fontWeight: "bold" }}>Hall Ticket Number</p>
+              </div>
+
+              <div className="descp">
+                <p>Are you willing to attend?</p>
+              </div>
             </div>
             <div className="checkboxes">
-              <label>
-                <input
-                  type="checkbox"
-                  checked={isYesChecked}
-                  onChange={handleYesChange}
-                  id="cb-yes"
-                />
+              <button className="button-proceed-yes" onClick={handleYesChange}>
                 Yes
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  checked={isNoChecked}
-                  onChange={handleNoChange}
-                  id="cb-no"
-                />
+              </button>
+              <button className="button-proceed-no" onClick={handleNoChange}>
                 No
-              </label>
+              </button>
             </div>
-
+            {
+              <>
+              
+              <Modal
+                className="modal-box-size"
+                open={modalOpen}
+                onClose={handleModalClose}
+              >
+                
+                <Box className="modal-box">
+                  <div className="model-div">
+                    <Typography
+                      id="modal-title"
+                      variant="h6"
+                      component="h2"
+                      style={{ color: "white" }}
+                    >
+                      Thank you for your response
+                    </Typography>
+<Confetti tweenDuration={10000} recycle={false} numberOfPieces={1000}/> 
+                    <Button
+                      className="close-button-modal"
+                      style={{
+                        backgroundColor: "white",
+                        color: "black",
+                        marginTop: "10px",
+                        fontWeight: "bold",
+                      }}
+                      onClick={handleModalClose}
+                    >
+                      <RxCross2 />
+                      Close
+                    </Button>
+                  </div>
+                </Box>
+              </Modal>
+              </>
+            }
+            {/* {isNoChecked && (
+              <div className="submit-btn">
+              <button >Confirm</button>
+            </div>
+            )}
             {isYesChecked && (
               <form className="form-style">
                 <div className="column-container">
@@ -163,9 +215,13 @@ const UserForm = () => {
                   </label>
                 </div>
               </form>
+            )} */}
+            {/* {isYesChecked && isSubFormNoChecked && (
+              <div className="submit-btn">
+              <button >Confirm</button>
+            </div>
             )}
-
-            {isSubFormYesChecked && (
+            {isYesChecked && isSubFormYesChecked && (
               <form onSubmit={handleSubmit}>
                 <div className="subform">
                   {attendees.map((attendee, index) => (
@@ -216,7 +272,7 @@ const UserForm = () => {
                   </div>
                 </div>
               </form>
-            )}
+            )} */}
           </div>
         </div>
       </div>

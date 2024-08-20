@@ -123,10 +123,13 @@ input[type="text"]:focus, input[type="file"]:focus {
 }
 
 .sub-container {
+  border: 2px solid #f0f0f0;
   position: relative;
-  max-width: 300px;
-  margin: 0 auto;
+  min-width: 90vw;
+  margin: 1 auto;
   padding: 20px;
+  padding-left: 2rem;
+  padding-right: 2rem;
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -137,25 +140,32 @@ input[type="text"]:focus, input[type="file"]:focus {
 .subform{
     display: flex;
     flex-direction: column;
-    gap: 50px;
+    gap: 40px;
     margin-top: 20px;
-    width: 100%;
+}
+.remove-btn-div{
+  display: flex;
+  justify-content: flex-end;
 }
 .remove-btn {
-  position: absolute;
+  text-align: right;
   top: 10px;
   right: 10px;
-  background-color: #e74c3c;
+  background-color: black;
   color: #fff;
   border: none;
-  padding: 0.3rem;
-  border-radius: 3px;
+  padding: 0.6rem;
+  border-radius: 50%;
   width:fit-content;
-  height: 25px;
+  height: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
 }
 
 .remove-btn:hover {
@@ -165,10 +175,15 @@ input[type="text"]:focus, input[type="file"]:focus {
 .add-more-btn {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
+  margin-top: 0.3rem;
 }
 
 .add-more-btn button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
   width: 120px;
   height: 40px;
   background-color: black;
@@ -188,7 +203,7 @@ input[type="text"]:focus, input[type="file"]:focus {
 .submit-btn {
   display: flex;
   justify-content: center;
-  margin-top: 1rem;
+  margin-top: 0.2rem;
 }
 
 .submit-btn button {
@@ -208,6 +223,64 @@ input[type="text"]:focus, input[type="file"]:focus {
   transform: scale(1.05);
 }
 
+.button-proceed-yes{
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.button-proceed-no{
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+.modal-box-size{
+  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  max-height: 40vh;
+  text-align: center;
+
+
+}
+.close-button-modal{
+  margin-top: .8rem;
+  background-color: black;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 10px;
+}
+@media screen and (orientation: landscape) {
+  .container {
+    width: 50vw;
+  }
+
+  input[type="text"], input[type="file"] {
+    font-size: 1.2em;
+  }
+
+  .descp {
+    font-size: 1.2rem;
+  }
+  .sub-container {
+    min-width: 30vw;
+  }
+  .remove-btn:hover {
+    background-color: #e74c3c;
+  }
+}
 @media (max-width: 768px) {
   .container {
     width: 90vw;
