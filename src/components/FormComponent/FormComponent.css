@@ -1,39 +1,10 @@
 /* Import Roboto font */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
 
-body {
-  font-family: 'Roboto', sans-serif;
-  background-color: black !important; /* Apply black background color */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
-}
-
-.custom-btn-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  margin: 10px;
-}
-
-.custom-submit-button {
-  background-color: black !important; /* Force black background color */
-  border: none !important; /* Remove border */
-  outline: none !important; /* Remove outline */
-  color: white !important; /* Set text color to white */
-}
-
-.custom-submit-button:hover {
-  background-color: black !important; /* Maintain black background on hover */
-  transform: scale(1.05);
-}
 
 .custom-form-container {
   width: fit-content; /* Default width for smaller screens */
-  padding: 2rem; /* Add padding for better spacing */
+  padding: 1rem; /* Add padding for better spacing */
   border: 1px solid #ddd; /* Light grey border */
   border-radius: 8px; /* Rounded corners */
   background-color: #fff; /* White background */
@@ -52,6 +23,6 @@ body {
   margin-bottom: 1rem;
 }
 .college-logo{
-  height: 4rem;
+  height: 6rem;
   width: fit-content;
 }

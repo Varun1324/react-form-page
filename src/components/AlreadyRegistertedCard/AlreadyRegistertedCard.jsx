@@ -1,10 +1,9 @@
 // eslint-disable-next-line no-unused-vars
-import React from "react";
-import "./FormComponent.css";
-import BoxSystemProps from "../BoxSystemProps";
+import React from 'react'
 import logo from "../../assets/college_logo.svg";
-import { ToastContainer } from 'material-react-toastify';
-const FormComponent = () => {
+import { FaCheckCircle } from "react-icons/fa";
+
+export const AlreadyRegistertedCard = () => {
   return (
     <>
       <div
@@ -15,30 +14,19 @@ const FormComponent = () => {
           justifyContent: "center",
           alignItems: "center",
           textAlign: "center",
+          paddingBottom:"10rem"
         }}
       >
         <div className="college-logo-div" style={{alignSelf:"center"}}>
           <img src={logo} alt="logo" className="college-logo" />
         </div>
-        <ToastContainer
-position="top-center"
-theme="light"
-autoClose={3000}
-hideProgressBar
-newestOnTop={false}
-closeOnClick
-rtl={false}
-pauseOnFocusLoss
-draggable
-pauseOnHover
-/>
         <div className="custom-form-container">
-          <h1>Registration</h1>
-          <BoxSystemProps />
+          <h1 style={{display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center",fontSize:"1.3rem",gap:"10px"}}><FaCheckCircle /> Response Submitted</h1>
+          <div className="submit-btn">
+                    <button type="submit">Download Pass</button>
+                  </div>
         </div>
       </div>
     </>
-  );
-};
-
-export default FormComponent;
+  )
+}

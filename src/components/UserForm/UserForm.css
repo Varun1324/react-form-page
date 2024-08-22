@@ -105,22 +105,9 @@ input[type="checkbox"] {
   width: 100%;
 }
 
-input[type="text"], input[type="file"] {
-  width: 100%;
-  padding: 10px;
-  border: none;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  background-color: #f0f0f0;
-  font-size: 1em;
-  transition: all 0.3s ease-in-out;
-  border-radius: 5px;
-}
 
-input[type="text"]:focus, input[type="file"]:focus {
-  outline: none;
-  border-bottom-color: rgb(62, 187, 62);
-  background-color: #e0e0e0;
-}
+
+
 
 .sub-container {
   border: 2px solid #f0f0f0;
@@ -203,11 +190,13 @@ input[type="text"]:focus, input[type="file"]:focus {
 .submit-btn {
   display: flex;
   justify-content: center;
-  margin-top: 0.2rem;
+  margin-top: 0.4rem;
 }
 
 .submit-btn button {
-  width: 120px;
+  width: fit-content;
+  padding-left: 1rem;
+  padding-right: 1rem;
   height: 40px;
   background-color: black;
   border-radius: 5px;
@@ -261,6 +250,11 @@ input[type="text"]:focus, input[type="file"]:focus {
   border-radius: 5px;
   cursor: pointer;
   margin-right: 10px;
+}
+.required-para-element{
+  color: red;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
 }
 @media screen and (orientation: landscape) {
   .container {

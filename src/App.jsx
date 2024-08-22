@@ -5,18 +5,26 @@ import FormComponent from './components/FormComponent/FormComponent'
 import GuestForm from './components/GuestForm/GuestForm'
 import { BrowserRouter as Router,Routes,Route } from 'react-router-dom';
 import "./App.css";
-//import TestPass from './components/TestPass/TestPass';
-
+import { AlreadyRegistertedCard } from './components/AlreadyRegistertedCard/AlreadyRegistertedCard';
+import StudentPass from './components/StudentPass/StudentPass';
+import ConfrimPass  from './components/ConfrimPass/ConfrimPass';
 
 function  App() {
   return (
-    <Router>
+    
+    <>
+      <Router>
     <Routes>
+    
       <Route path="/" element={<FormComponent />} />
       <Route path="/userform" element={<UserForm />} /> 
       <Route path="/guestForm" element={<GuestForm />} />
+      <Route path="/alreadyRegistered" element={<AlreadyRegistertedCard />} />
+      <Route path="/generatePass" element={<StudentPass />} />
+      <Route path="/confrimPass" element={<ConfrimPass/>} />
     </Routes>
     </Router>
+    </>
   )
 }
 
