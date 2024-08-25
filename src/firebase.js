@@ -2,13 +2,13 @@ import { initializeApp } from 'firebase/app';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyB3MQAX9lSvxwtlJuVQQVDP4TL0TNa62Ko",
-  authDomain: "student-certificate-organizing.firebaseapp.com",
-  projectId: "student-certificate-organizing",
-  storageBucket: "student-certificate-organizing.appspot.com",
-  messagingSenderId: "378068040239",
-  appId: "1:378068040239:web:344cf584ae52bf263ce4da",
-  measurementId: "G-E0KJ0H93EF"
+  apiKey: "AIzaSyApcl_nDszXR1O09CLV9Ez1qOIIcP6PKcM",
+  authDomain: "graduation-day.firebaseapp.com",
+  projectId: "graduation-day",
+  storageBucket: "graduation-day.appspot.com",
+  messagingSenderId: "251071689480",
+  appId: "1:251071689480:web:37a6e7c2431d87b41a32bd",
+  measurementId: "G-GDSKJ93SJL"
 };
 
 const app = initializeApp(firebaseConfig);

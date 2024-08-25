@@ -12,12 +12,20 @@ const ConfrimPass = () => {
     const handleReEnter=()=>{
         navigate("/guestForm")
     }
-    const handleConfrim=()=>{
-        axios
-        .post("http://34.132.254.89/insert_guests", attendees)
+    const handleConfrim = () => {
+      // Determine if the attendees list is empty
+      const isEmpty = attendees.length === 0;
+      // Prepare the request payload
+      const payload = {
+        attendees: attendees,   // or just `attendees` if ES6 shorthand is used
+        empty: isEmpty,
+      };
+    
+      axios
+        .post("http://34.132.254.89/insert_guests", payload)
         .then((response) => {
           console.log(response.status);
-          if (response.status === 201) {
+          if (response.status === 201 || response.status === 200) {
             console.log("success");
             navigate("/generatePass");
           } else {
@@ -27,8 +35,8 @@ const ConfrimPass = () => {
         .catch((error) => {
           console.error("Error in POST request:", error);
         });
-
-    }
+    };
+    
   return (
     <>
       <div className="college-logo-div">
@@ -60,6 +68,7 @@ const ConfrimPass = () => {
                 ))}
               </div>
             )}
+            <p style={{color:'',paddingBottom:"0.3rem"}}>* Pass can't be generated again *</p>
             <div style={{display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center",gap:"15px"}}>
                 <button className="button-proceed-yes" onClick={handleConfrim} style={{display:"flex",flexDirection: "row", justifyContent:"center",alignItems:"center",gap:"6px" }}><GiConfirmed /> Confirm</button>
                 <button className="button-proceed-yes" onClick={handleReEnter} style={{display:"flex",flexDirection: "row", justifyContent:"center",alignItems:"center",gap:"6px" }}><FaEdit/> Modify</button>

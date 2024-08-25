@@ -82,10 +82,6 @@ const BoxSystemProps = () => {
     return transformedName;
   }
 
-  // Example usage
-  const fullName = "ATYAM KIRANMAI NAGA VENKATA PRATHYUSHA";
-  const result = transformName(fullName);
-  console.log(result); // Output: A.K.N.V PRATHYUSHA
 
   const handleAadharNumberInputChange = (event) => {
     if (event.target.value.length <= 14) {
@@ -115,17 +111,24 @@ const BoxSystemProps = () => {
     const aadharNo = aadharNumberInput;
     const rollNumberPattern1 = /^21A85A[A-Z0-9]{4}$/;
     const rollNumberPattern2 = /^20A81A[A-Z0-9]{4}$/;
-
+    const rollNumberPattern3 = /^21A81D[A-Z0-9]{4}$/;
+    const rollNumberPattern4 = /^22A81D[A-Z0-9]{4}$/;
+    const rollNumberPattern5 = /^21A81E[A-Z0-9]{4}$/;
+  
     let isValid = true;
-
+  
     // Roll Number Validation
-    if (!rollNumberPattern1.test(rollNo) && !rollNumberPattern2.test(rollNo)) {
+    if (!rollNumberPattern1.test(rollNo) && 
+        !rollNumberPattern2.test(rollNo) &&
+        !rollNumberPattern3.test(rollNo) &&
+        !rollNumberPattern4.test(rollNo) &&
+        !rollNumberPattern5.test(rollNo)) {
       setRollNumberError("* Please enter a valid Roll Number");
       isValid = false;
     } else {
       setRollNumberError("");
     }
-
+  
     // Aadhar Number Validation
     if (aadharNo.length !== 14) {
       setAadharNumberError("* Please enter a valid Aadhar Number");
@@ -137,7 +140,7 @@ const BoxSystemProps = () => {
       alert("Please select a branch");
       isValid = false;
     }
-
+  
     if (isValid) {
       setLoading(true);
       await axios
@@ -175,6 +178,7 @@ const BoxSystemProps = () => {
         });
     }
   };
+  
 
   return (
     <Container>
@@ -279,6 +283,8 @@ const BoxSystemProps = () => {
             <MenuItem value={"EEE"}>EEE</MenuItem>
             <MenuItem value={"MECH"}>MECH</MenuItem>
             <MenuItem value={"CIVIL"}>CIVIL</MenuItem>
+            <MenuItem value={"MBA"}>MBA</MenuItem>
+            <MenuItem value={"MTECH"}>MTECH</MenuItem>
           </Select>
         </FormControl>
 

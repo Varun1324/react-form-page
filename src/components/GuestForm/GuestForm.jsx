@@ -20,12 +20,8 @@ const GuestForm = () => {
   const navigate = useNavigate();
   const roll_no = localStorage.getItem("roll_no");
 
-  const [attendees, setAttendees] = useState([
-    { guest_name: "", relation: "", phone_no: "", roll_no: roll_no },
-  ]);
-  const [errors, setErrors] = useState([
-    { guest_name: "", relation: "", phone_no: "", roll_no: roll_no },
-  ]);
+  const [attendees, setAttendees] = useState([]);
+  const [errors, setErrors] = useState([]);
 
   const handleAddAttendee = () => {
     if (attendees.length < 2) {
@@ -105,7 +101,7 @@ const GuestForm = () => {
     setErrors(newErrors);
 
     if (valid) {
-      localStorage.setItem("attendees",JSON.stringify(attendees))
+      localStorage.setItem("attendees", JSON.stringify(attendees))
       navigate("/confrimPass")
       // axios
       //   .post("http://34.132.254.89/insert_guests", attendees)
@@ -148,29 +144,29 @@ const GuestForm = () => {
           <div className="main-container">
             <div className="container">
               <h1 style={{ textAlign: "center" }}>Attendees Details</h1>
-              <ul style={{fontSize:"0.9rem",textAlign:"justify"}}>
-                <li>Tab <span style={{fontWeight:"bold"}}>"Add More"</span> button to add additional attendees.</li>
+              <ul style={{ fontSize: "0.9rem", textAlign: "justify" }}>
+                <li>Tab <span style={{ fontWeight: "bold" }}>"Add More"</span> button to add additional attendees.</li>
                 <li>
-                If no attendees are present, please click the <span style={{fontWeight:"bold"}}>"Submit"</span>button.
+                  If no attendees are present, please click the <span style={{ fontWeight: "bold" }}>"Submit"</span>button.
                 </li>
               </ul>
               <form onSubmit={handleSubmit}>
                 <div className="subform">
                   {attendees.map((attendee, index) => (
                     <div className="sub-container" key={index}>
-                      <div style={{display:"flex",flexDirection:"row",justifyContent:"space-between",alignItems:"center"}}>
-                      <p style={{fontWeight:"bold"}}>Guest {index+1}</p>
-                      <div className="remove-btn-div">
-                        
-                        <button
-                          type="button"
-                          className="remove-btn"
-                          onClick={() => handleRemoveAttendee(index)}
-                        >
-                          <RxCross2 />
-                        </button>
-                      </div>
+                      <div style={{ display: "flex", flexDirection: "row", justifyContent: "space-between", alignItems: "center" }}>
+                        <p style={{ fontWeight: "bold" }}>Guest {index + 1}</p>
+                        <div className="remove-btn-div">
+
+                          <button
+                            type="button"
+                            className="remove-btn"
+                            onClick={() => handleRemoveAttendee(index)}
+                          >
+                            <RxCross2 />
+                          </button>
                         </div>
+                      </div>
                       <TextField
                         fullWidth
                         label="Name"

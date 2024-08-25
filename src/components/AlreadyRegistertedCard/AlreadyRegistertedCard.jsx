@@ -3,7 +3,7 @@ import React from 'react'
 import logo from "../../assets/college_logo.svg";
 import { FaCheckCircle } from "react-icons/fa";
 
-export const AlreadyRegistertedCard = () => {
+const AlreadyRegistertedCard = () => {
   return (
     <>
       <div
@@ -30,3 +30,5 @@ export const AlreadyRegistertedCard = () => {
     </>
   )
 }
+
+export default AlreadyRegistertedCard

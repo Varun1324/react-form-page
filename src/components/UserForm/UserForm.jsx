@@ -23,6 +23,7 @@ const UserForm = () => {
   const rollNo = localStorage.getItem("roll_no");
   const aadhar = localStorage.getItem("aadhar");
 
+  const hasMounted = React.useRef(false);
   // const [modalOpen, setModalOpen] = useState(false);
   // const [isNoChecked, setIsNoChecked] = useState(false);
   // const [isSubFormYesChecked, setIsSubFormYesChecked] = useState(false);
@@ -34,6 +35,11 @@ const UserForm = () => {
     if (!rollNo || !aadhar) {
       navigate("/");
     }
+
+    if (!hasMounted.current) {
+      handleAlreadyRegisterd();
+      hasMounted.current = true;
+    }
   }, [rollNo, aadhar, navigate]);
 
   const handleYesChange = () => {
@@ -43,7 +49,9 @@ const UserForm = () => {
 
     // Log the retrieved values for debugging purposes
     console.log("Roll No:", roll_no, "Name:", name, "Branch:", branch);
-    setYesLoading(true)
+
+    setYesLoading(true);
+
     axios
       .post("http://34.132.254.89/insert_attendees", {
         roll_no: roll_no,
@@ -51,25 +59,76 @@ const UserForm = () => {
         branch: branch,
       })
       .then((response) => {
-        setYesLoading(false)
+        setYesLoading(false);
         if (response.status === 201) {
           console.log("success");
-          navigate("/guestForm"); // Redirect to the guest form
+          navigate("/guestForm");
         } else {
           console.error("Failed to insert attendee:", response.data.message);
         }
       })
       .catch((error) => {
+        setYesLoading(false);
+        if (error.response && error.response.status === 409) {
+          notify("Your response is already stored please download the pass 😇");
+          navigate("/alreadyRegisteredCard");
+          setTimeout(() => {
+            localStorage.clear();
+            navigate("/alreadyRegisteredCard");
+          }, 2500)
+          console.error("Duplicate entry found:", error.response.data.error);
+        } else {
+          console.error("Error in POST request:", error);
+        }
         console.error("Error in POST request:", error);
       });
   };
 
+  const handleAlreadyRegisterd = () => {
+    const roll_no = localStorage.getItem("roll_no");
+    const name = localStorage.getItem("name");
+    const branch = localStorage.getItem("branch");
+
+    // Log the retrieved values for debugging purposes
+    console.log("Roll No:", roll_no, "Name:", name, "Branch:", branch);
+
+    setYesLoading(true);
+
+    axios
+      .post("http://34.132.254.89/check_attendees", {
+        roll_no: roll_no,
+        branch: branch,
+      })
+      .then((response) => {
+        setYesLoading(false);
+        if (response.status === 200) {
+          notify("Your response is already stored please download the pass 😇");
+          setTimeout(() => {
+            localStorage.clear();
+            navigate("/alreadyRegisteredCard");
+          }, 2500)
+          console.error("Duplicate entry found:", error.response.data.error);
+        } else {
+          console.error("Failed to insert attendee:", response.data.message);
+        }
+      })
+      .catch((error) => {
+        setYesLoading(false);
+        console.error("Error in POST request:", error);
+      });
+  };
+
+
   const handleNoChange = () => {
     // setModalOpen(true);
-    notify()
+    notify("Response Have Been Submitted 🚀");
+    setTimeout(() => {
+      localStorage.clear();
+      navigate("/");
+    }, 2000)
   };
-  const notify = () => {
-    toast("Response Have Been Submitted 🚀", {
+  const notify = (message) => {
+    toast(message, {
       position: "top-center",
       autoClose: 1500,
       hideProgressBar: true,
@@ -81,15 +140,15 @@ const UserForm = () => {
       transition: Bounce,
     });
     // setModalOpen(false);
-    setTimeout(()=>{
-      localStorage.clear();
-    navigate("/");
-    },2000)
+    // setTimeout(() => {
+    //   localStorage.clear();
+    //   navigate("/");
+    // }, 2000)
   };
 
   return (
     <div className="full-container">
-       <>
+      <>
         <ToastContainer
           position="top-center"
           autoClose={5000}
@@ -112,11 +171,6 @@ const UserForm = () => {
           <div className="container">
             <div>
               <div className="column-container">
-                {/* <img
-                  src={userimage}
-                  alt="User"
-                  style={{ width: "75px", height: "75px" }}
-                /> */}
                 <FontAwesomeIcon size="5x" icon={faUserGraduate} />
               </div>
               <div className="column-container">
@@ -137,7 +191,6 @@ const UserForm = () => {
                 <CircularProgress color="inherit" />
               ) : (
                 <>
-                  
                   <button
                     className="button-proceed-yes"
                     onClick={handleYesChange}
@@ -150,14 +203,13 @@ const UserForm = () => {
                   >
                     No
                   </button>
-                  
                 </>
               )}
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
